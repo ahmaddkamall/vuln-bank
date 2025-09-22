@@ -9,17 +9,16 @@ on:
 jobs:
   security-scanning:
     runs-on: ubuntu-latest
+    name: Security Scanning
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
     
-    # Secret Scanning dengan Gitleaks
-    - name: Secret Scanning
+    - name: Secret Scanning with Gitleaks
       uses: gitleaks/gitleaks-action@v2
     
-    # SCA Scan dengan Trivy
-    - name: SCA Scan Dependencies
+    - name: SCA Scan with Trivy
       uses: aquasecurity/trivy-action@master
       with:
         scan-type: 'fs'
@@ -27,13 +26,11 @@ jobs:
         format: 'sarif'
         output: 'trivy-results.sarif'
     
-    # SAST Scan dengan Semgrep
-    - name: SAST Scan
+    - name: SAST Scan with Semgrep
       uses: returntocorp/semgrep-action@v1
       with:
         config: p/security-audit
     
-    # Upload Security Reports
     - name: Upload Security Reports
       uses: actions/upload-artifact@v3
       with:
@@ -41,9 +38,7 @@ jobs:
         path: *.sarif
         retention-days: 30
     
-    # Critical Vulnerability Check
-    - name: Check for Critical Vulnerabilities
-      id: check-critical
+    - name: Check Results
       run: |
-        echo "has_critical=true" >> $GITHUB_OUTPUT
-        echo "🚨 Simulation: Critical vulnerabilities found!"
+        echo "✅ Security scanning completed!"
+        echo "📊 Reports available in Artifacts"
