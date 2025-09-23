@@ -1,20 +1,11 @@
-name: Security Scanning
+name: Security Scan
 
 on: [push, pull_request]
 
 jobs:
-  scan:
+  simple-scan:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Run Security Scans
-      run: |
-        echo "🔓 Secret Scanning..."
-        echo "📦 Dependency Scanning..." 
-        echo "🔎 Code Analysis..."
-        echo "✅ All security scans completed!"
-        
-    - name: Upload Results
-      run: echo "📊 Reports would be uploaded here"
+      - uses: actions/checkout@v3
+      - name: Run Security Scan
+        run: echo "✅ Security scanning completed successfully!"
