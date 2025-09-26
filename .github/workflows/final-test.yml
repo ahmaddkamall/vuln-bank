@@ -1,9 +1,0 @@
-name: Final Test Workflow
-on: [push]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Step 1 - No SSH"
-      - run: echo "Step 2 - Still no SSH"
-      - run: echo "🎉 Success without SSH!"
