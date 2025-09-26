@@ -1,6 +1,11 @@
-title = "Vuln Bank Gitleaks Config"
+title = "Vuln Bank Secret Scanning"
 
 [[rules]]
-description = "AWS Access Key ID"
+description = "AWS Access Key"
 regex = '''(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}'''
 tags = ["key", "AWS"]
+
+[[rules]]
+description = "Generic API Key"
+regex = '''(?i)(api[_-]?key|secret[_-]?key|private[_-]?key)[\s]*=[\s]*["'][\w\-]+["']'''
+tags = ["key", "API"]
