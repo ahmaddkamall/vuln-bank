@@ -1,4 +1,4 @@
-ame: 🔐 DevSecOps Pipeline
+name: 🔐 DevSecOps Pipeline
 
 on:
   push:
