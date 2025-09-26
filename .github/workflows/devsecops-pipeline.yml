@@ -19,8 +19,6 @@ jobs:
     # Step 2: Secret Scanning (Gitleaks)
     - name: 🔓 Secret Scanning
       uses: gitleaks/gitleaks-action@v2
-      with:
-        config-path: .gitleaks.toml
 
     # Step 3: SCA Scanning (Trivy)
     - name: 📦 SCA Scan (Dependencies)
