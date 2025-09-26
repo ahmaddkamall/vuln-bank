@@ -19,8 +19,8 @@ jobs:
     # Step 2: Secret Scanning (Gitleaks) - FIXED
     - name: 🔓 Secret Scanning
       uses: gitleaks/gitleaks-action@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        config-path: https://github.com/gitleaks/gitleaks/raw/master/config/gitleaks.toml
 
     # Step 3: SCA Scanning (Trivy)
     - name: 📦 SCA Scan (Dependencies)
