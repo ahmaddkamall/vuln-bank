@@ -439,3 +439,77 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 Made with ❤️ for Security Education
+
+## 🔐 Implementasi Pipeline DevSecOps
+
+### Gambaran Umum
+Pipeline pemindaian keamanan otomatis yang terintegrasi dengan GitHub Actions yang berjalan pada setiap perubahan kode pada branch main. Pipeline melakukan pemeriksaan keamanan komprehensif dan menghasilkan laporan terperinci.
+
+### Arsitektur Pipeline
+```plaintext
+GitHub Repository (vuln-bank)
+    │
+    ├── Trigger: Push ke main / Pull Request ke main
+    │
+    └── GitHub Actions Workflow
+        │
+        ├── 🔓 Secret Scanning (Gitleaks)
+        ├── 📦 SCA Scanning (Trivy - Dependencies)
+        ├── 🔎 SAST Scanning (Semgrep - Code Analysis)
+        ├── 🔧 Misconfiguration Scanning (Trivy - Dockerfile)
+        ├── 🔍 DAST Basic Check (Application Security)
+        ├── 💾 Artifact Upload (Security Reports)
+        └── 📊 Summary Reporting
+```
+### Security Tools Integration
+
+| Tool | Type | Purpose | Output |
+|------|------|---------|---------|
+| **Gitleaks** | Secret Scanning | Mendeteksi kebocoran kredensial | SARIF Report |
+| **Trivy** | SCA + Misconfig | Scan dependencies & konfigurasi Docker | SARIF Report |
+| **Semgrep** | SAST | Analisis kode statis | SARIF Report |
+| **GitHub Actions** | CI/CD Platform | Eksekusi pipeline | Workflow Artifacts |
+
+### Pipeline Configuration
+
+**Location:** `.github/workflows/devsecops-pipeline.yml`
+
+**Triggers:**
+- Push to `main` branch
+- Pull Request to `main` branch
+
+**Workflow Steps:**
+1. Checkout code
+2. Secret Scanning (Gitleaks)
+3. SCA Scanning (Trivy - Dependencies)
+4. SAST Scanning (Semgrep - Code Analysis)
+5. Misconfiguration Scanning (Trivy - Dockerfile)
+6. DAST Basic Check
+7. Upload Security Reports
+8. Critical Vulnerability Check
+
+### Security Reports
+
+Pipeline menghasilkan laporan keamanan dalam format SARIF yang dapat diakses melalui:
+
+1. **GitHub Actions Artifacts**
+   - Navigate to: `Actions` → Select workflow run → `Artifacts`
+   - Download: `security-reports.zip`
+
+2. **Integrated Security Tab** (GitHub Advanced Security)
+
+### Penanganan Critical
+- name: ⚠️ Pemeriksaan Kerentanan Kritis
+  run: |
+    echo "🔍 Memeriksa kerentanan kritis..."
+    if [ -f "trivy-results.sarif" ]; then
+      echo "🚨 Kerentanan kritis terdeteksi!"
+      # Siap untuk integrasi notifikasi Slack/Email
+    fi
+
+### Compliance Standards
+Pipeline helps meet compliance requirements:
+- OWASP Top 10 coverage
+- CIS Benchmarks for Docker configuration
+- Secret management best practices
+>>>>>>> 873beba48d0437a4dd4a7c04ee6e2e51dba31ea5
